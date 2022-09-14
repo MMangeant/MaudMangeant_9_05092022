@@ -28,6 +28,7 @@ export default class NewBill {
     // check if file has a valid extension
     const fileExtension = fileName.split(".").pop();
     const validExtension = ["jpg","jpeg","png"];
+    
     if(!validExtension.includes(fileExtension)){
       document.querySelector(`input[data-testid="file"]`).value = null 
       document.querySelector(".errorMessageFile").style.display = "block" 
