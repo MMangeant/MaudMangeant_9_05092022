@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "jest --coverage --noStackTrace --silent"
+    "test": "jest --coverage --noStackTrace --silent",
+    "testOne": "jest src/__tests__/Login.js"
   },
   "jest": {
     "verbose": false,
