@@ -61,3 +61,9 @@ textarea:focus, input:focus, select:focus {
 *[placeholder] {
   color: #0E5AE5 !important;
 }
+
+.errorMessageFile{
+  color: #0E5AE5 !important;
+  font-style: italic;
+  display: none;
+}
