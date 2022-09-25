@@ -67,3 +67,7 @@ textarea:focus, input:focus, select:focus {
   font-style: italic;
   display: none;
 }
+
+.displayed{
+  display: block;
+}

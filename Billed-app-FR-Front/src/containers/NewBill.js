@@ -31,10 +31,11 @@ export default class NewBill {
     
     if(!validExtension.includes(fileExtension)){
       document.querySelector(`input[data-testid="file"]`).value = null 
-      document.querySelector(".errorMessageFile").style.display = "block" 
+      document.querySelector(".errorMessageFile").classList.add('displayed')
     }else{
-      document.querySelector(".errorMessageFile").style.display = "none" 
+      document.querySelector(".errorMessageFile").classList.remove('displayed')
     }
+ 
     //
 
     this.store
