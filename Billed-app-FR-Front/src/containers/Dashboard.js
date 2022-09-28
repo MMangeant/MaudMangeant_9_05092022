@@ -149,8 +149,8 @@ export default class {
     //   $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     // })
     
-     // debug : fix adding the querySelector of the parent
-     bills.forEach((bill) => {
+    // debug : fix adding the querySelector of the parent
+    bills.forEach((bill) => {
       $(`#status-bills-container${index} #open-bill${bill.id}`).click((e) =>
         this.handleEditTicket(e, bill, bills)
       );

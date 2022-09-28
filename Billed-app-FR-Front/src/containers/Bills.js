@@ -33,6 +33,7 @@ export default class {
       .bills()
       .list()
       .then(snapshot => {
+        // console.log(snapshot)
         const bills = snapshot
           .map(doc => {
             try {
@@ -52,7 +53,7 @@ export default class {
               }
             }
           })
-          console.log('length', bills.length)
+          // console.log('length', bills.length)
         return bills
       })
     }
