@@ -40,13 +40,17 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
+  // 
+
   describe("When I am on Bills Page and I click on the icon eye", () => {
     test("Then it should open the modal", () => {
-      // Create Page Bills
+
+      // Create page bills with the bills's data
       const html = BillsUI({
         data: bills,
       });
       document.body.innerHTML = html;
+
       const store = null;
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname });
@@ -71,7 +75,7 @@ describe("Given I am connected as an employee", () => {
   });
 
   describe("When I click on 'Nouvelle note de frais'", () => {
-    test("Then I should be sent to 'New bill page'", () => {
+    test("Then I should be sent to the page 'New bill page'", () => {
       // Create Bills
       Object.defineProperty(window, "localStorage", {
         value: localStorageMock,
