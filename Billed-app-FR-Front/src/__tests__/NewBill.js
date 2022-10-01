@@ -153,12 +153,11 @@ describe("Given I am connected as an employee", () => {
 describe('Given I am connected as an employee', () => {
   describe('When I am on NewBill Page and submit the form', () => {
     test('Then it should generate a new bill', async () => {
-      // spy
-      // Cannot spy the post property because it is not a function
-      // undefined given instead
+
+      // fonctions simulée avec spyOn
       const postSpy = jest.spyOn(firebase, 'post');
 
-      // new bill to submit
+      // on crée une nouvelle facture
       const newBill = {
         id: '47qAXb6fIm2zOKkLzMro',
         vat: '80',
@@ -177,18 +176,17 @@ describe('Given I am connected as an employee', () => {
         pct: 20,
       };
 
-      // get bills and the new bill
+      // on récupère les factures et la nouvelle
       const bills = await firebase.post(newBill);
 
-      // expected results
+      // on vérifie que la fonction simulée postSpy soit appelée une fois
       expect(postSpy).toHaveBeenCalledTimes(1);
       expect(bills).toBe('fake new bill received');
     });
 
-    // TEST : newBill fetch failure => 404 error
+
     test('Then the bill is added to the API but fails with 404 message error', async () => {
-      // single use for throw error
-      // Cannot read property 'mockImplementationOnce' of undefined
+
       firebase.post.mockImplementationOnce(() =>
         Promise.reject(new Error('Erreur 404'))
       );
@@ -196,15 +194,13 @@ describe('Given I am connected as an employee', () => {
       // DOM construction
       document.body.innerHTML = BillsUI({ error: 'Erreur 404' });
 
-      // await for response
+      // on vérifie que le message d'erreur s'affiche bien
       const message = screen.getByText(/Erreur 404/);
-
-      // expected result
       expect(message).toBeTruthy();
     });
 
     test('then it posts to API and fails with 500 message error on Bills page', async () => {
-      // cannot read property 'mockImplementationOnce' of undefined
+
       firebase.post.mockImplementationOnce(() =>
         Promise.reject(new Error('Erreur 500'))
       );
@@ -212,10 +208,8 @@ describe('Given I am connected as an employee', () => {
       // DOM construction
       document.body.innerHTML = BillsUI({ error: 'Erreur 500' });
 
-      // await for response
+      // on vérifie que le message d'erreur s'affiche bien
       const message = screen.getByText(/Erreur 500/);
-
-      // expected result
       expect(message).toBeTruthy();
     });
   });
