@@ -45,30 +45,39 @@ describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page and I click on the icon eye", () => {
     test("Then it should open the modal", () => {
 
-      // Create page bills with the bills's data
+      // on affiche la page Bill avec les datas des notes de frais
       const html = BillsUI({
         data: bills,
       });
       document.body.innerHTML = html;
 
-      const store = null;
+      // on init onNavigate
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname });
       };
+
+      // on instancie la class Bills
       const billsList = new Bills({
         document,
         onNavigate,
-        store,
+        store :null,
         localStorage: window.localStorage,
       });
-      // Create Modal
+
+      // on simule la création d'une modale 
       $.fn.modal = jest.fn();
+
+      //on simule la méthode handleClickIconEye 
       const icon = screen.getAllByTestId("icon-eye")[0];
       const handleClickIconEye = jest.fn(() => billsList.handleClickIconEye(icon));
       icon.addEventListener("click", handleClickIconEye);
-      // EventHandler
+      
+      // on simule l'évènement du clic avec fireEvent
       fireEvent.click(icon);
+
+      // on vérifie que la fonction handleClickIconEye est bien appelée
       expect(handleClickIconEye).toHaveBeenCalled();
+      // on vérifie que la modale s'ouvre bien
       const modale = document.getElementById("modaleFile");
       expect(modale).toBeTruthy();
     });
@@ -76,16 +85,18 @@ describe("Given I am connected as an employee", () => {
 
   describe("When I click on 'Nouvelle note de frais'", () => {
     test("Then I should be sent to the page 'New bill page'", () => {
-      // Create Bills
+      
       Object.defineProperty(window, "localStorage", {
         value: localStorageMock,
       });
+
       window.localStorage.setItem(
         "user",
         JSON.stringify({
           type: "Employee",
         })
       );
+
       const root = document.createElement("div");
       root.setAttribute("id", "root");
       document.body.append(root);
@@ -114,6 +125,7 @@ describe("Given I am connected as an employee", () => {
 describe("Given I am a user connected as Employee", () => {
   describe("When I navigate to Bills page", () => {
     test("fetch bills from mock API GET", () => {
+      // on indique que l'on se trouve sur la page Employe
       Object.defineProperty(window, "localStorage", {
         value: localStorageMock,
       });
@@ -142,6 +154,7 @@ describe("Given I am a user connected as Employee", () => {
   });
 
   describe("When an error occurs on API", () => {
+    // avant chaque test
     beforeEach(() => {
       jest.spyOn(mockStore, "bills");
       Object.defineProperty(window, "localStorage", {
@@ -161,6 +174,12 @@ describe("Given I am a user connected as Employee", () => {
     });
 
     test("fetches bills from an API and fails with 404 message error", async () => {
+      mockStore.bills.mockImplementationOnce(() => {
+        return {
+          list : () =>  {
+            return Promise.reject(new Error("Erreur 404"))
+          }
+        }})
       const html = BillsUI({ error: "Erreur 404" });
       document.body.innerHTML = html;
       const message = await screen.getByText(/Erreur 404/);
@@ -168,6 +187,12 @@ describe("Given I am a user connected as Employee", () => {
     });
 
     test("fetches messages from an API and fails with 500 message error", async () => {
+      mockStore.bills.mockImplementationOnce(() => {
+        return {
+          list : () =>  {
+            return Promise.reject(new Error("Erreur 500"))
+          }
+        }})
       const html = BillsUI({ error: "Erreur 500" });
       document.body.innerHTML = html;
       const message = await screen.getByText(/Erreur 500/);

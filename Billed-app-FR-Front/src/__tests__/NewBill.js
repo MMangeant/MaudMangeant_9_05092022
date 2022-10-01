@@ -23,11 +23,10 @@ const onNavigate = (pathname) => {
 
 describe("Given I am connected as an employee", () => {
 
-  // parcours employe
+  // on indique que l'on se trouve sur la page Employe
   Object.defineProperty(window, 'localStorage', {
     value: localStorageMock,
   });
-
   window.localStorage.setItem(
     'user',
     JSON.stringify({
@@ -38,15 +37,19 @@ describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
     
     test("Then the newBill page should be rendered", () => {
+      // création de la page NewBill
       const html = NewBillUI()
       document.body.innerHTML = html
+      // on vérifie la présence du texte 'Envoyer une note de frais' sur la page
       expect(screen.getAllByText('Envoyer une note de frais')).toBeTruthy();
     })
 
     test('Then a form with nine fields should be rendered', () => {
+      // création de la page NewBill
       const html = NewBillUI()
       document.body.innerHTML = html
       const form = document.querySelector('form');
+      // on vérifie qu’il y a bien 9 champs dans le formulaire
       expect(form.length).toEqual(9);
     });
 
@@ -146,7 +149,7 @@ describe("Given I am connected as an employee", () => {
 });
 
 
-// Intégration test POST
+// test d'intégration POST
 describe('Given I am connected as an employee', () => {
   describe('When I am on NewBill Page and submit the form', () => {
     test('Then it should generate a new bill', async () => {
